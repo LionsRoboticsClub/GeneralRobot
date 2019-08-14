@@ -12,8 +12,9 @@ void LogData(T data){
 
 int InputData(){
   int data = 0;
+  Serial1.println("This was called");
   if(Serial1.available() > 0) {
-     data = Serial1.read();
+    data = Serial1.read();
     LogData(data);
   }
   return data;
@@ -25,6 +26,6 @@ void setup(){
 }
 void loop()
 {
-                          
+unproccesed_data = InputData();                    
  
 }   
