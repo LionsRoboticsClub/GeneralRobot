@@ -11,8 +11,8 @@
 
 class Buzzer{
   public:
-    Buzzer();
-    void beep();
+    Buzzer(int);
+    void beep(int);
     
   private:
     byte _pin = 28;

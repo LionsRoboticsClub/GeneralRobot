@@ -6,13 +6,11 @@
 #include "Arduino.h"
 #include "Buzzer.h"
 
-Buzzer::Buzzer(){
+Buzzer::Buzzer(int _pin){
   pinMode(_pin, OUTPUT);
 }
 
-void Buzzer::beep(){
-  digitalWrite(_pin, HIGH);
-  delay(50);
-  digitalWrite(_pin, LOW);
+void Buzzer::beep(int pitch){
+  digitalWrite(_pin, pitch);
   delay(50);
 }
