@@ -2,7 +2,7 @@ import processing.serial.*;
 Serial port;
 
 void setup() {
-  String portName = Serial.list()[0];
+  String portName = Serial.list()[1];
   port = new Serial(this, portName, 9600);
 }
 

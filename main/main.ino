@@ -28,7 +28,10 @@ void setup(){
 void loop()
 {
 
-if(Serial1.available())
-unproccesed_data = InputData();                    
+if(Serial1.available()){
+unproccesed_data = InputData(); 
+  if(unproccesed_data == 123) buzz.beep(100);
+  else buzz.beep(0);
+}                   
  
 }   
