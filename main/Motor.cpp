@@ -33,7 +33,7 @@ void Motor::move(int velocity){
     analogWrite(_pinBwd, velocity);
   }else{
     analogWrite(_pinFwd, 0);
-    analogWrite(_pinFwd, 0);
+    analogWrite(_pinBwd, 0);
   }
 }
 

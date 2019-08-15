@@ -12,9 +12,12 @@ void LogData(T data){
   Serial.println(data);
 }
 
+
 Motor motor1(2,3,0,0);
 Motor motor2(9,8,0,0);
 Motor motor3(4,5,0,0);
+Motor motor4(6,7,0,0);
+MecanumDrive mecanum(motor1, motor2, motor3, motor4, 0,0,0);
 
 
 void setup(){
@@ -31,6 +34,7 @@ if(Serial1.available()){
 
   if(current_index == 5) {
     // Do robot things.
+    mecanum.moveTowards(90,0,1);
   }
 }
  
