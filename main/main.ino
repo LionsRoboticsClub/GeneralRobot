@@ -3,31 +3,19 @@
 #include "Buzzer.h"
 #include "Motor.h"
 #include "MecanumDrive.h"
-// Variable used to store data read from Serial1.
-int unproccesed_data;
+
+byte movement_data[6] = {0,0,0,0,0,0};
+byte current_index = 0;
 
 template <typename T>
 void LogData(T data){
   Serial.println(data);
 }
 
-int InputData(){
-  int data = 0;
-  Serial.println("This was called");
-  data = Serial1.read();
-  LogData(data);
-
-  return data;
-}
-
-Buzzer buzz(28);
-
 Motor motor1(2,3,0,0);
 Motor motor2(9,8,0,0);
 Motor motor3(4,5,0,0);
 
-Motor motor4(6,7,0,0);
-MecanumDrive mecanum(motor1, motor2, motor3, motor4, 0,0,0);
 
 void setup(){
   Serial.begin(9600);
@@ -37,10 +25,13 @@ void loop()
 {
 
 if(Serial1.available()){
-unproccesed_data = InputData(); 
-  if(unproccesed_data == 123) buzz.beep(100);
-  else buzz.beep(0);
+  movement_data[current_index] = Serial1.read();
+  LogData(movement_data[current_index]);
+  current_index == 6 ? current_index = 0 : ++current_index;
+
+  if(current_index == 5) {
+    // Do robot things.
+  }
 }
-mecanum.moveTowards(270, 1, 0);
  
 }   
