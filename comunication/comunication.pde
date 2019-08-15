@@ -10,6 +10,22 @@ ControlDevice gpad;
 
 Serial port;
 //signed byte (only taking 8 bits space (decimal range between -128 and 128))
+float xAxis = 0; 
+float yAxis = 0; 
+float xRot = 0; 
+float yRot = 0; 
+float headingAngle = 0;
+float magnitud = 0;
+float rotationSpeed = 0;
+
+boolean A = false; 
+boolean B = false; 
+boolean X = false;
+boolean Y = false;
+boolean reset = false;
+
+
+
 byte motor1 = -1; 
 byte motor2 = 0;
 byte motor3 = 0; 
@@ -28,11 +44,65 @@ void setup() {
     println("No suitable device configured");
     System.exit(-1);
   }
-  String portName = Serial.list()[1];
-  port = new Serial(this, portName, 9600);
+  //String portName = Serial.list()[1];
+  //port = new Serial(this, portName, 9600);
 }
 
-void draw() {      
+void draw() {    
+  //Xbox Controller readings
+  
+  xAxis = gpad.getSlider("X").getValue();
+  yAxis = -1 * gpad.getSlider("Y").getValue();
+  xRot = gpad.getSlider("X_Rot").getValue();
+  yRot = gpad.getSlider("Y_Rot").getValue();
+  A = gpad.getButton("AButton").pressed();
+  B = gpad.getButton("BButton").pressed();
+  X = gpad.getButton("XButton").pressed();
+  Y = gpad.getButton("YButton").pressed();
+  reset = gpad.getButton("Reset").pressed();  
+  
+  println("X = " + xAxis + " , Y = " + yAxis);
+  
+  if(abs(yAxis) < 0.1 && abs(xAxis) < 0.1){
+    headingAngle = 0;
+  }else{
+    headingAngle = atan2(xAxis, yAxis) * 180 / PI;
+  }
+  
+  if(headingAngle < 0){
+    headingAngle += 360;
+  }
+  
+  magnitud = sqrt(xAxis * xAxis + yAxis * yAxis);
+  
+  if(magnitud > 1){
+    magnitud = 1;
+  }
+ 
+  if(abs(yRot) < 0.3 && abs(xRot) < 0.3){
+    rotationSpeed = 0;
+  }else{
+    rotationSpeed = sqrt(xRot * xRot + yRot * yRot);
+    if(rotationSpeed > 1){
+      rotationSpeed = 1;
+    }
+  }
+
+
+
+  
+  println("angle: " + headingAngle);
+  
+  println("magnitud: " + magnitud);
+  
+  println("rotSpeed: " + rotationSpeed);
+  
+  println("X: " + X);
+  println("Y: " + Y); 
+  println("A: " + A);
+  println("B: " + B);
+  println("Reset: " + reset);
+  
    //0 velocidad motor 1
    //1 velocidad motor 2
    //2 velocidad motor 3
@@ -47,5 +117,5 @@ void draw() {
   signal[4] = intake; 
   signal[5] = band; 
   
-  port.write(signal);
+  //port.write(signal);
 }
