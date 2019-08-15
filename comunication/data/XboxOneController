@@ -1,0 +1,11 @@
+Xbox One Controller
+Y	Y axis	3	SLIDER	Eje Y	0	1.0	0.0
+X	X axis	3	SLIDER	Eje X	0	1.0	0.0
+Y_Rot	Y rotation	3	SLIDER	Rotación Y	0	1.0	0.0
+X_Rot	X rotation	3	SLIDER	Rotación X	0	1.0	0.0
+Triggers	Triggers	3	SLIDER	Eje Z	0	1.0	0.0
+AButton	A	1	BUTTON	Botón 0	0	0.0	0.0
+BButton	B	1	BUTTON	Botón 1	0	0.0	0.0
+XButton	X	1	BUTTON	Botón 2	0	0.0	0.0
+YButton	Y	1	BUTTON	Botón 3	0	0.0	0.0
+Reset	Reset	1	BUTTON	Botón 7	0	0.0	0.0

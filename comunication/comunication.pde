@@ -1,4 +1,13 @@
 import processing.serial.*;
+
+import org.gamecontrolplus.gui.*;
+import org.gamecontrolplus.*;
+import net.java.games.input.*;
+
+ControlIO control;
+Configuration config;
+ControlDevice gpad;
+
 Serial port;
 //signed byte (only taking 8 bits space (decimal range between -128 and 128))
 byte motor1 = -1; 
@@ -9,7 +18,16 @@ byte motor4 = 0;
 byte intake = -128; 
 byte band = 0;
 
+
+
 void setup() {
+  size(400,240);
+  control = ControlIO.getInstance(this);
+  gpad = control.getMatchedDevice("XboxOneController");
+  if(gpad == null){
+    println("No suitable device configured");
+    System.exit(-1);
+  }
   String portName = Serial.list()[1];
   port = new Serial(this, portName, 9600);
 }
