@@ -34,7 +34,24 @@ byte motor4 = 0;
 byte intake = -128; 
 byte band = 0;
 
+byte ButtonPressed(boolean A, boolean B, boolean Y, boolean X){
+  byte buttons = 0;
+  if(A) buttons = 1;
+  else if(B) buttons = 2;
+  else if(Y) buttons = 3;
+  else if(X) buttons = 4;
+  return buttons;
+}
 
+byte MagnitudeAndRotation(float magnitude, float rotationSpeed) {
+  byte magnitudeRotation = 0;
+  if(magnitude==1)
+  magnitudeRotation |= 1;
+  if(rotationSpeed==1)
+  magnitudeRotation |=2;
+  
+  return magnitudeRotation;
+}
 
 void setup() {
   size(400,240);
@@ -59,7 +76,7 @@ void draw() {
   B = gpad.getButton("BButton").pressed();
   X = gpad.getButton("XButton").pressed();
   Y = gpad.getButton("YButton").pressed();
-  reset = gpad.getButton("Reset").pressed();  
+  reset = gpad.getButton("Reset").pressed(); 
   
   println("X = " + xAxis + " , Y = " + yAxis);
   
@@ -109,13 +126,15 @@ void draw() {
    //3 velocidad motor 4
    //4 intake data
    //5 band data
+   
+   
   byte signal[] = new byte[6];
-  signal[0] = motor1;
+  signal[0] =
   signal[1] = motor2; 
   signal[2] = motor3; 
   signal[3] = motor4; 
-  signal[4] = intake; 
-  signal[5] = band; 
+  signal[4] = MagnitudeAndRotation(magnitud, rotationSpeed);
+  signal[5] = ButtonPressed(A,B,Y,X); 
   
   //port.write(signal);
 }
