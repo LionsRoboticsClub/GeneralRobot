@@ -24,6 +24,19 @@ Motor::Motor(byte pinFwd, byte pinBwd, byte encA, byte encB){
   digitalWrite(_encB, HIGH);
 }
 
+void Motor::move(int velocity){
+  if(velocity>0){
+    analogWrite(_pinFwd, velocity);
+    analogWrite(_pinBwd, 0);
+  }else if(velocitu<0){
+    analogWrite(_pinFwd, 0);
+    analogWrite(_pinBwd, velocity);
+  }else{
+    analogWrite(_pinFwd, 0);
+    analogWrite(_pinFwd, 0);
+  }
+}
+
 void Motor::forward(int velocity){
   analogWrite(_pinFwd, velocity);
   analogWrite(_pinBwd, 0);

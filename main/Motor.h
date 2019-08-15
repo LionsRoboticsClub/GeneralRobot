@@ -16,6 +16,7 @@ class Motor{
     /* MOTOR FUNCTIONS */
     void forward(int velocity);
     void backward(int velocity);
+    void move(int velocity);
     void completeStop();
     void updateEncPos();
     void resetEncPos();
