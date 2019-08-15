@@ -6,7 +6,7 @@
 #include "Arduino.h"
 #include "Motor.h"
 
-//Motor::Motor(){}
+Motor::Motor(){}
 
 Motor::Motor(byte pinFwd, byte pinBwd, byte encA, byte encB){
   _pinFwd = pinFwd;
@@ -28,7 +28,7 @@ void Motor::move(int velocity){
   if(velocity>0){
     analogWrite(_pinFwd, velocity);
     analogWrite(_pinBwd, 0);
-  }else if(velocitu<0){
+  }else if(velocity<0){
     analogWrite(_pinFwd, 0);
     analogWrite(_pinBwd, velocity);
   }else{

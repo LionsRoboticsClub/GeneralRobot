@@ -2,7 +2,7 @@
 #include "Arduino.h"
 #include "Buzzer.h"
 #include "Motor.h"
-
+#include "MecanumDrive.h"
 // Variable used to store data read from Serial1.
 int unproccesed_data;
 
@@ -22,10 +22,12 @@ int InputData(){
 
 Buzzer buzz(28);
 
-Motor motor1(2,3,2,3);
-Motor motor2(4,5,0,0);
-Motor motor3(9,8,0,0);
+Motor motor1(2,3,0,0);
+Motor motor2(9,8,0,0);
+Motor motor3(4,5,0,0);
+
 Motor motor4(6,7,0,0);
+MecanumDrive mecanum(motor1, motor2, motor3, motor4, 0,0,0);
 
 void setup(){
   Serial.begin(9600);
@@ -39,11 +41,6 @@ unproccesed_data = InputData();
   if(unproccesed_data == 123) buzz.beep(100);
   else buzz.beep(0);
 }
-
-motor1.backward(250);
-motor2.backward(250);
-motor3.forward(250);
-motor4.forward(250);
-buzz.beep(0);
+mecanum.moveTowards(270, 1, 0);
  
 }   

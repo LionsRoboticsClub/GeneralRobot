@@ -10,7 +10,8 @@
 
 class Motor{
   public:
-    //Constructor format: FPin, BPin, EncA, EncB
+    //Constructor format: FPisn, BPin, EncA, EncB
+    Motor();
     Motor(byte pinFwd, byte pinBwd, byte encA, byte encB);
 
     /* MOTOR FUNCTIONS */

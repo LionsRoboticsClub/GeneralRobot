@@ -11,10 +11,9 @@
 
 class MecanumDrive{
   public:
-    MecanumDrive(Motor A, Motor B, Motor C, Motor D, double angle, double magnitude, double rotationSpeed);
+    MecanumDrive(Motor, Motor, Motor, Motor, double, double, double);
 
-    /* MOTOR FUNCTIONS */
-    void moveTowards(double angle, double magnitude, double rotationSpeed);
+    void moveTowards(double, double, double);
 
   private:
     double angle, magnitude, rotationSpeed;
