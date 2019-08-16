@@ -15,7 +15,7 @@ float yAxis = 0;
 float xRot = 0; 
 float yRot = 0; 
 float headingAngle = 0;
-float magnitud = 0;
+float magnitude = 0;
 float rotationSpeed = 0;
 
 boolean A = false; 
@@ -23,16 +23,6 @@ boolean B = false;
 boolean X = false;
 boolean Y = false;
 boolean reset = false;
-
-
-
-byte motor1 = -1; 
-byte motor2 = 0;
-byte motor3 = 0; 
-byte motor4 = 0; 
-
-byte intake = -128; 
-byte band = 0;
 
 byte ButtonPressed(boolean A, boolean B, boolean Y, boolean X){
   byte buttons = 0;
@@ -43,14 +33,16 @@ byte ButtonPressed(boolean A, boolean B, boolean Y, boolean X){
   return buttons;
 }
 
-byte MagnitudeAndRotation(float magnitude, float rotationSpeed) {
-  byte magnitudeRotation = 0;
-  if(magnitude==1)
-  magnitudeRotation |= 1;
-  if(rotationSpeed==1)
-  magnitudeRotation |=2;
-  
-  return magnitudeRotation;
+byte GetMagnitude(float magnitude) {
+  return byte(magnitude * 128);
+}
+
+byte GetRotationSpeed(float rotationSpeed) {
+  return byte(rotationSpeed*128);
+}
+
+byte GetAngle(float angle) {
+  return byte(angle/3);
 }
 
 void setup() {
@@ -61,8 +53,8 @@ void setup() {
     println("No suitable device configured");
     System.exit(-1);
   }
-  //String portName = Serial.list()[1];
-  //port = new Serial(this, portName, 9600);
+  String portName = Serial.list()[1];
+  port = new Serial(this, portName, 9600);
 }
 
 void draw() {    
@@ -90,10 +82,10 @@ void draw() {
     headingAngle += 360;
   }
   
-  magnitud = sqrt(xAxis * xAxis + yAxis * yAxis);
+  magnitude = sqrt(xAxis * xAxis + yAxis * yAxis);
   
-  if(magnitud > 1){
-    magnitud = 1;
+  if(magnitude > 1){
+    magnitude = 1;
   }
  
   if(abs(yRot) < 0.3 && abs(xRot) < 0.3){
@@ -110,7 +102,7 @@ void draw() {
   
   println("angle: " + headingAngle);
   
-  println("magnitud: " + magnitud);
+  println("magnitud: " + magnitude);
   
   println("rotSpeed: " + rotationSpeed);
   
@@ -120,21 +112,12 @@ void draw() {
   println("B: " + B);
   println("Reset: " + reset);
   
-   //0 velocidad motor 1
-   //1 velocidad motor 2
-   //2 velocidad motor 3
-   //3 velocidad motor 4
-   //4 intake data
-   //5 band data
    
-   
-  byte signal[] = new byte[6];
-  signal[0] =
-  signal[1] = motor2; 
-  signal[2] = motor3; 
-  signal[3] = motor4; 
-  signal[4] = MagnitudeAndRotation(magnitud, rotationSpeed);
-  signal[5] = ButtonPressed(A,B,Y,X); 
+  byte signal[] = new byte[4];
+  signal[0] = GetMagnitude(magnitude);
+  signal[1] = GetRotationSpeed(rotationSpeed);
+  signal[2] = GetAngle(headingAngle);
+  signal[3] = ButtonPressed(A,B,Y,X); 
   
-  //port.write(signal);
+  port.write(signal);
 }
