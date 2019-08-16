@@ -4,10 +4,10 @@
 #include "Motor.h"
 #include "MecanumDrive.h"
 #include <Servo.h>
-int movement_data[3] = {0,0,0};
+int movement_data[3] = {0, 0, 0};
 float actualData[4] = {0, 0, 0, 0};
 byte current_index = 0;
-int countZeros = 0; 
+int countZeros = 0;
 template <typename T>
 void LogData(T data) {
   Serial.println(data);
@@ -22,7 +22,7 @@ MecanumDrive mecanum(motor1, motor2, motor3, motor4, 0, 0, 0);
 Servo band;
 Servo intake;
 Buzzer buzz(28);
-char lectura; 
+char lectura;
 bool a = false, b = false, x = false, y = false;
 
 void setup() {
@@ -39,36 +39,36 @@ void loop() {
     lectura = Serial1.read();
     Serial.println(lectura);
   }
-  if (lectura== 'F') {
+  if (lectura == 'F') {
     //mecanum.moveTowards(2,1,0);
-      //Serial.println("estado 1");
+    //Serial.println("estado 1");
     motor1.forward(155);
     motor2.forward(155);
     motor3.forward(155);
     motor4.forward(155);
-        countZeros = 0;
-   
-  } else if (lectura== 'R') {
+    countZeros = 0;
+
+  } else if (lectura == 'R') {
     //mecanum.moveTowards(270,1,0);
-          //Serial.println("estado 2");
+    //Serial.println("estado 2");
     motor1.backward(155);
     motor2.forward(155);
     motor3.forward(155);
     motor4.backward(155);
 
     countZeros = 0;
-  } else if (lectura== 'L') {
+  } else if (lectura == 'L') {
     //mecanum.moveTowards(180,1,0);
-          //Serial.println("estado 3");
-        motor1.backward(155);
+    //Serial.println("estado 3");
+    motor1.backward(155);
     motor2.backward(155);
     motor3.backward(155);
-    
-    motor4.backward(155);
-        countZeros = 0;
-    
 
-  } else if (lectura== 'S') {
+    motor4.backward(155);
+    countZeros = 0;
+
+
+  } else if (lectura == 'S') {
     countZeros++;
     //mecanum.moveTowards(0, 0, 0);
     //Serial.println("estado 0");
@@ -76,22 +76,38 @@ void loop() {
     motor2.backward(0);
     motor3.backward(0);
     motor4.forward(0);
-   
 
-  } else if(lectura == 'B'){
+
+  } else if (lectura == 'B') {
     //mecanum.moveTowards(90,1,0);ç
-     //Serial.println("estado 4");
-        motor1.forward(155);
+    //Serial.println("estado 4");
+    motor1.forward(155);
     motor2.backward(155);
     motor3.backward(155);
     motor4.forward(155);
+  } else if (lectura == '1') {
+    //gira right
+    motor1.forward(155);
+    motor2.forward(155);
+    motor3.backward(155);
+    motor4.backward(155);
+  } else if (lectura == '2') {
+    //gira left
+    motor1.backward(155);
+    motor2.backward(155);
+    motor3.forward(155);
+    motor4.forward(155);
   }
+  intake.write(180);
+  if (lectura == 'A') band.write(90);
+  if (lectura == 'V') intake.write(180);
+  if (lectura == 'X') band.write(0);
+  if (lectura == 'Y') intake.write(0);
 
-  if(lectura == 'A') band.writeMicroseconds(1000);
-  if(lectura == 'B') intake.writeMicroseconds(2000);
-
-  intake.writeMicroseconds(1500);
-  band.writeMicroseconds(1500);
+  if (lectura == 'a') band.write(90);
+  if (lectura == 'v') intake.write(90);
+  if (lectura == 'x') band.write(90);
+  if (lectura == 'y') intake.write(90);
 
 
   //mecanum.moveTowards(actualData[2],actualData[0],0);

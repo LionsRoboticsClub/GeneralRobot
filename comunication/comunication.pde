@@ -19,6 +19,7 @@ float magnitude = 0;
 float rotationSpeed = 0;
 long intake = 0; 
 long band = 0; 
+float trigger = 0;
 
 boolean lastA = false;
 boolean newA = false; 
@@ -37,6 +38,9 @@ boolean B = false;
 boolean X = false;
 boolean Y = false;
 boolean reset = false;
+
+boolean right = false;
+boolean left = false; 
 
 byte ButtonPressed(boolean A, boolean B, boolean Y, boolean X) {
   byte buttons = 0;
@@ -73,7 +77,7 @@ void setup() {
 
 void draw() {    
   //Xbox Controller readings
-
+  trigger = gpad.getSlider("Triggers").getValue();
   xAxis = gpad.getSlider("X").getValue();
   yAxis = -1 * gpad.getSlider("Y").getValue();
   xRot = gpad.getSlider("X_Rot").getValue();
@@ -120,13 +124,27 @@ void draw() {
 
   println("rotSpeed: " + rotationSpeed);
 
+  println("trig: " + trigger);
   println("X: " + X);
   println("Y: " + Y); 
   println("A: " + A);
   println("B: " + B);
   println("Reset: " + reset);
-  char signal[] = new char[3];
-
+  
+  char signal[] = new char[4];
+  
+  if(trigger < -0.5) {
+    right = true;
+  }else{
+    right = false;
+  }
+  
+  if(trigger > 0.5){
+    left = true;
+  }else{
+    left = false;
+  }
+  
   if ((headingAngle < 45 || headingAngle > 325) && magnitude > 0.15) {
     //signal[0] = 'F';
     port.write('F');
@@ -139,9 +157,15 @@ void draw() {
   } else if(magnitude > 0.15){
     //signal[0] = 'L';
     port.write('B');
+  } else if(right){
+  port.write('1');
+  }else if(left){
+    port.write('2');
   }
+  
+  
 
-  if (floor(magnitude) == 0) {
+  if (floor(magnitude) == 0 && !A && !B && !X && !Y && !right && !left) {
     //signal[0] = 0;
     port.write('S');
   }
@@ -163,13 +187,13 @@ void draw() {
   if(B){
     newB = true;
     if(lastB == false){
-      port.write("B");
+      port.write("V");
       lastB = true;
     }
   }else{
     newB = false;
     if(lastB == true){
-      port.write('b');
+      port.write('v');
       lastB = false;
     }
   }
