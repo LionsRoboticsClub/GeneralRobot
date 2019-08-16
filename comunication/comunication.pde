@@ -72,6 +72,7 @@ void setup() {
     System.exit(-1);
   }
   String portName = Serial.list()[1];
+  println(Serial.list());
   port = new Serial(this, portName, 9600);
 }
 

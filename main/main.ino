@@ -98,8 +98,9 @@ void loop() {
     motor3.forward(155);
     motor4.forward(155);
   }
-  intake.write(180);
-  if (lectura == 'A') band.write(90);
+  intake.write(0);
+  band.write(0);
+  if (lectura == 'A') band.write(180);
   if (lectura == 'V') intake.write(180);
   if (lectura == 'X') band.write(0);
   if (lectura == 'Y') intake.write(0);
