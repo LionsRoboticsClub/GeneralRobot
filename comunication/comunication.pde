@@ -111,14 +111,23 @@ void draw() {
   println("A: " + A);
   println("B: " + B);
   println("Reset: " + reset);
-  
-   
-  byte signal[] = new byte[4];
+    byte signal[] = new byte[4];
+    
+    if(headingAngle < 45 && headingAngle > 325){
+      signal[0] = 1;
+    } else if(headingAngle < 135 && headingAngle > 45){
+      signal[0] = 2;
+    } else if(headingAngle >135 && headingAngle < 225){
+    signal[0] = 3; 
+  }else{
+  signal[0] = 4;
+}
+/*
   signal[0] = GetMagnitude(magnitude);
   signal[1] = GetRotationSpeed(rotationSpeed);
   signal[2] = GetAngle(headingAngle);
   signal[3] = ButtonPressed(A,B,Y,X); 
-  
+  */
   port.write(signal);
   println(signal);
 }
