@@ -18,10 +18,14 @@ Motor motor2(9,8,0,0);
 Motor motor3(4,5,0,0);
 Motor motor4(6,7,0,0);
 MecanumDrive mecanum(motor1, motor2, motor3, motor4, 0,0,0);
+Servo band; 
+Servo intake; 
 
-bool a = false,b = false,x = false,y = false; 
+bool a = false, b = false, x = false, y = false; 
 
 void setup(){
+  band.attach(29);
+  intake.attach(30);
   Serial.begin(9600);
   Serial1.begin(9600);         //Sets the data rate in bits per second (baud) for serial data transmission
 }
@@ -43,9 +47,19 @@ if(Serial1.available()){
     movement_data[1] /= 128;
     movement_data[2] *= 3;
     
-
-    
-    mecanum.moveTowards(90,0,1);
+    mecanum.moveTowards(movement_data[2],movement_data[0],0);
+    if(movement_data[3] == 1){
+      intake.writeMicroseconds(1000);
+    }else if(movement_data[3] == 2){
+      intake.writeMicroseconds(2000);
+    }else if(movement_data[3] == 3){
+      band.writeMicroseconds(1000);
+    }else if(movement_data[3] == 4){
+      band.writeMicroseconds(2000);
+    }else{
+      band.writeMicroseconds(1500);
+      intake.writeMicroseconds(1500);
+    }
   }
 }
  
