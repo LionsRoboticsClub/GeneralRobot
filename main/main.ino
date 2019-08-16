@@ -18,6 +18,11 @@ Motor motor1(7, 6, 0, 0);
 Motor motor2(4, 5, 0, 0);
 Motor motor3(9, 8, 0, 0);
 Motor motor4(3, 2, 0, 0);
+
+Motor servo1(x,x,0,0);
+Motor servo2(x,x,0,0);
+
+
 MecanumDrive mecanum(motor1, motor2, motor3, motor4, 0, 0, 0);
 Servo band;
 Servo intake;
@@ -99,6 +104,8 @@ void loop() {
     motor4.forward(155);
   }
   intake.write(0);
+  servo1.move(120);
+  servo2.move(120);
   band.write(0);
   if (lectura == 'A') band.write(180);
   if (lectura == 'V') intake.write(180);
