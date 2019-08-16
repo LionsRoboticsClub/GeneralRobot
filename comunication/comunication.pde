@@ -34,11 +34,11 @@ byte ButtonPressed(boolean A, boolean B, boolean Y, boolean X){
 }
 
 byte GetMagnitude(float magnitude) {
-  return byte(magnitude * 128);
+  return byte(magnitude * 127F);
 }
 
 byte GetRotationSpeed(float rotationSpeed) {
-  return byte(rotationSpeed*128);
+  return byte(rotationSpeed * 127F);
 }
 
 byte GetAngle(float angle) {
@@ -120,4 +120,5 @@ void draw() {
   signal[3] = ButtonPressed(A,B,Y,X); 
   
   port.write(signal);
+  println(signal);
 }
